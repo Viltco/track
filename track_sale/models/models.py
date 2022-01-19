@@ -47,6 +47,7 @@ class SaleOrder(models.Model):
                 'location_id': warehouse.id,
                 'location_dest_id': self.partner_id.property_stock_customer.id,
                 'product_uom_qty': 1,
+                'lot_ids': [line.id],
                 # 'quantity_done': line.qty_done,
             }))
         new_picking = {
@@ -54,7 +55,7 @@ class SaleOrder(models.Model):
             'picking_type_id': picking_type_id.id,
             'state': 'draft',
             'origin': self.name,
-            'sale_id': self.id,
+            # 'sale_id': self.id,
             'location_id': warehouse.id,
             'location_dest_id': self.partner_id.property_stock_customer.id}
 

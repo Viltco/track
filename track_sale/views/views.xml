@@ -12,11 +12,11 @@
                 </xpath>
 <!--                attrs="{'invisible': [('mo_count', '=', 0)]}"-->
 
-<!--                <xpath expr="//div[hasclass('oe_button_box')]" position="inside">-->
-<!--                    <button type="object" name="action_view_do" class="oe_stat_button" icon="fa-truck" >-->
-<!--                        <field name="do_count" widget="statinfo" string="DO"/>-->
-<!--                    </button>-->
-<!--                </xpath>-->
+                <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                    <button type="object" name="action_view_do" class="oe_stat_button" icon="fa-truck" attrs="{'invisible': [('do_count', '=', 0)]}">
+                        <field name="do_count" widget="statinfo" string="DO"/>
+                    </button>
+                </xpath>
 
             </field>
         </record>
