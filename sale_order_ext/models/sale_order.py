@@ -47,10 +47,9 @@ class SaleOrder(models.Model):
 
     @api.model
     def create(self, vals_list):
-        print('Helllll')
         record = super(SaleOrder, self).create(vals_list)
         for line in record.order_line:
-            line.product_uom_qty = self.no_of_vehicle
+            line.product_uom_qty = record.no_of_vehicle
         return record
 
     def write(self, vals_list):
