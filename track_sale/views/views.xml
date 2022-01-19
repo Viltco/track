@@ -1,0 +1,25 @@
+<odoo>
+    <data>
+
+        <record id="view_sale_order_form_inh" model="ir.ui.view">
+            <field name="name">sale.order.form.inh</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <field name="sale_lot_ids" widget="many2many_tags" domain="[('id', 'in', sale_lot_ids_new)]" string="IMEI NO"/>
+                    <field name="sale_lot_ids_new" widget="many2many_tags" invisible="1"/>
+                </xpath>
+<!--                attrs="{'invisible': [('mo_count', '=', 0)]}"-->
+
+<!--                <xpath expr="//div[hasclass('oe_button_box')]" position="inside">-->
+<!--                    <button type="object" name="action_view_do" class="oe_stat_button" icon="fa-truck" >-->
+<!--                        <field name="do_count" widget="statinfo" string="DO"/>-->
+<!--                    </button>-->
+<!--                </xpath>-->
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
