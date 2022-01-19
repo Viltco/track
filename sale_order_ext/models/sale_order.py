@@ -45,6 +45,21 @@ class SaleOrder(models.Model):
             if not sale.vehicle_number_ids:
                 sale.vehicle_number_ids = [1]
 
+    @api.model
+    def create(self, vals_list):
+        print('Helllll')
+        record = super(SaleOrder, self).create(vals_list)
+        for line in record.order_line:
+            line.product_uom_qty = self.no_of_vehicle
+        return record
+
+    def write(self, vals_list):
+        print('write')
+        record = super(SaleOrder, self).write(vals_list)
+        for line in self.order_line:
+            line.product_uom_qty = self.no_of_vehicle
+        return record
+
     @api.depends('vehicle_number_ids')
     def compute_no_of_vehicles(self):
         for rec in self:
