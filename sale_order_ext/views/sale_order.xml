@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--    Quotation Tree View-->
+    <record id="quotation_tree_ext" model="ir.ui.view">
+        <field name="name">quotation_tree_ext</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <!--                <field name="vehicle_number"/>-->
+                <field name="sale_region_id"/>
+                <field name="no_of_vehicle" sum="SUM of vehicle Number"/>
+
+            </xpath>
+
+        </field>
+    </record>
+
+    <!--    Sale Order Tree View-->
+    <record id="sale_order_tree_ext" model="ir.ui.view">
+        <field name="name">sale_order_tree_ext</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <!--                <field name="vehicle_number"/>-->
+                <field name="sale_region_id"/>
+                <field name="no_of_vehicle" sum="SUM of vehicle Number"/>
+
+            </xpath>
+
+        </field>
+    </record>
+    <record id="sale_order_search_view" model="ir.ui.view">
+        <field name="name">sale_order_search_view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='my_quotation']" position="after">
+                <separator/>
+                <filter string="Sale Region" name="filter_sale_region" domain="[('sale_region_id','!=',False)]"/>
+                <!--                <filter string="Vehicle Number" name="filter_vehicle_number" domain="[('vehicle_number','!=',False)]"/>-->
+                <!--                <filter string="Technician" name="filter_technician_id" domain="[('technician_id','!=',False)]"/>-->
+                <separator/>
+                <filter name="groupby_sale_region" string="Sale Region" domain="" context="{'group_by':'sale_region_id'}"/>
+                <!--                <filter name="groupby_vehicle_number" string="Vehicle Number" domain="" context="{'group_by':'vehicle_number'}"/>-->
+                <!--                <filter name="groupby_technician_id" string="Technician" domain="" context="{'group_by':'technician_id'}"/>-->
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherit Form View to Modify it -->
+    <record id="sale_order_form_ext" model="ir.ui.view">
+        <field name="name">sale_order_form_ext</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button string="Data for Required Field" name="data_for_required_fields" type="object" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='sale_order_template_id']" position="after">
+                <field name="sale_region_id" options="{'no_open': True, 'no_create': True}"/>
+                <field name="vehicle_number_ids" widget="many2many_tags"/>
+                <field name="no_of_vehicle" />
+            </xpath>
+            <xpath expr="//page[@name='other_information']/group/group/field" position="after">
+                <field name="technician_ids"  widget="many2many_tags" domain="[('is_technician','=', True)]" options="{'no_open': True, 'no_create': True}"/>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="round_off" />
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="stock_picking_tree_ext" model="ir.ui.view">
+        <field name="name">stock_picking_tree_ext</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <field name="sale_region_id"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="stock_picking_search_view" model="ir.ui.view">
+        <field name="name">stock_picking_search_view</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='starred']" position="before">
+                <separator/>
+                <filter string="Sale Region" name="filter_sale_region" domain="[('sale_region_id','!=',False)]"/>
+                <!--                <filter string="Vehicle Number" name="filter_vehicle_number" domain="[('vehicle_number_ids','!=',False)]"/>-->
+                <!--                <filter string="Technician" name="filter_technician_id" domain="[('technician_id','!=',False)]"/>-->
+                <separator/>
+                <filter name="groupby_sale_region" string="Sale Region" domain="" context="{'group_by':'sale_region_id'}"/>
+                <!--                <filter name="groupby_vehicle_number" string="Vehicle Number" domain="" context="{'group_by':'vehicle_number_ids'}"/>-->
+                <!--                <filter name="groupby_technician_id" string="Technician" domain="" context="{'group_by':'technician_id'}"/>-->
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherit Form View to Modify it -->
+    <record id="stock_picking_form_ext" model="ir.ui.view">
+        <field name="name">stock_picking_form_ext</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="sale_region_id" options="{'no_open': True, 'no_create': True}" readonly="1"/>
+                <field name="vehicle_number_ids" widget="many2many_tags" readonly="1"/>
+                <field name="technician_ids" widget="many2many_tags"  readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

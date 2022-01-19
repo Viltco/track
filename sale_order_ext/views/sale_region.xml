@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sale_region_form_view" model="ir.ui.view">
+        <field name="name">sale_region_form_view</field>
+        <field name="model">sale.region</field>
+        <field name="arch" type="xml">
+            <form string="Sale Region Form">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sale_region_tree_view" model="ir.ui.view">
+        <field name="name">sale_region_tree_view</field>
+        <field name="model">sale.region</field>
+        <field name="arch" type="xml">
+            <tree string="Sale Region Tree">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="sale_region_action" model="ir.actions.act_window">
+        <field name="name">Sale Region</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.region</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="sale_region_menu" name="Region" parent="sale.menu_sale_config" action="sale_region_action" sequence="1"/>
+</odoo>
